@@ -8,8 +8,8 @@ export JAVA_OPTS="$JAVA_OPTS -XX:+UseParallelOldGC -XX:-UseAdaptiveSizePolicy"
 #-XX:+PrintAdaptiveSizePolicy
 export JAVA_OPTS="$JAVA_OPTS -XX:+PrintCommandLineFlags -XX:+PrintGCDetails -XX:+PrintGCDateStamps"
 export JAVA_OPTS="$JAVA_OPTS -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10m"
-#create volume vmll-info in Host, then mount it when run this container
-export JAVA_OPTS="$JAVA_OPTS -Xloggc:/vmall-info/"
+#write log to persistent volume 
+export JAVA_OPTS="$JAVA_OPTS -Xloggc:/vmall-log/order-log/"
 
 #Heap dump
-export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/vmall-info/"
+export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/vmall-log/heapdump/"
