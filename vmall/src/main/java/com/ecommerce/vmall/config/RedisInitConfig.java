@@ -14,7 +14,9 @@ class RedisInitConfig {
 
   @Bean
   public LettuceConnectionFactory redisConnectionFactory() {
-    return new LettuceConnectionFactory(new RedisStandaloneConfiguration("127.0.0.1", 6379));
+    String host = System.getenv("VMALL_REDIS_HOST");
+    int port = Integer.parseInt(System.getenv("VMALL_REDIS_PORT"));
+    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
   }
  
   
