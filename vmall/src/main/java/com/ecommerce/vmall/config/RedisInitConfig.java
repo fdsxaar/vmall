@@ -9,9 +9,10 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+//TODO:better to config these in application.properties
 @Configuration
 class RedisInitConfig {
-
+  
   @Bean
   public LettuceConnectionFactory redisConnectionFactory() {
     String host = System.getenv("VMALL_REDIS_HOST");

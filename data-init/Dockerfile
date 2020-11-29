@@ -7,3 +7,4 @@ ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} /data-init.jar
 
 CMD ["java", "-jar", "/data-init.jar"]
+
