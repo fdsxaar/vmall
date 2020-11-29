@@ -18,7 +18,7 @@ spec:
       # [START cloud_sql_proxy_k8s_secrets]
       containers:
       - name: vmall-data-init
-        image: fdsxaar/data-init:v0.1
+        image: fdsxaar/data-init
         env:
         - name: VMALL_DB_USERNAME
           valueFrom:

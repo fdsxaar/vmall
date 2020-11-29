@@ -1,7 +1,9 @@
 package com.ecommerce.testdata.initdata;
 
 import javax.sql.DataSource;
-
+import javax.annotation.Resource;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,11 @@ public class InitData implements CommandLineRunner {
 
 	@Autowired
 	DataSource dataSource;
+	@Autowired
+	StringRedisTemplate stringRedisTemplate;
+	 
+	@Resource(name="stringRedisTemplate")
+	private ValueOperations<String, String> valueOpt;
 	
 	@Autowired
 	InitDBTablesData initDBTablesData;
@@ -23,7 +30,10 @@ public class InitData implements CommandLineRunner {
 		ScriptRunner runner;
 		try {
 			Thread.sleep(10);
+			valueOpt.set("k8s","redis-ok");
+			System.out.println("获取mysql连接");
 			runner = new ScriptRunner(dataSource.getConnection());
+			System.out.println("成功获取mysql连接");
 			runner.setAutoCommit(true);
 			runner.setStopOnError(true);
 			runner.setLogWriter(null);
