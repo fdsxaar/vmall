@@ -22,6 +22,7 @@ public class InitData implements CommandLineRunner {
 	public void run(String... args) {
 		ScriptRunner runner;
 		try {
+			Thread.sleep(10);
 			runner = new ScriptRunner(dataSource.getConnection());
 			runner.setAutoCommit(true);
 			runner.setStopOnError(true);
