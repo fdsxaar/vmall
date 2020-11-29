@@ -4,6 +4,7 @@ kind: Deployment
 metadata:
   name: vmall-data-init-sa
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: vmall-data-init
@@ -34,16 +35,16 @@ spec:
             secretKeyRef:
               name: vmall-db-secret
               key: database
-        -- name: VMALL_DB_HOST
+        - name: VMALL_DB_HOST
           valueFrom:
             secretKeyRef:
               name: vmall-db-secret
               key: mysql_host
         - name: VMALL_DB_PORT
-            valueFrom:
-              secretKeyRef:
-                name: vmall-db-secret
-                key: mysql_port 
+          valueFrom:
+            secretKeyRef:
+              name: vmall-db-secret
+              key: mysql_port 
             
         #Redis proxy ip 
         - name: VMALL_REDIS_HOST
@@ -66,15 +67,15 @@ spec:
         image: gcr.io/cloudsql-docker/gce-proxy:1.17
         env:
         - name: VMALL_DB_PORT
-            valueFrom:
-              secretKeyRef:
-                name: vmall-db-secret
-                key: mysql_port 
+          valueFrom:
+            secretKeyRef:
+              name: vmall-db-secret
+              key: mysql_port 
         - name: VMALL_DB_INSTANCE_CONNECTION_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: vmall-db-secret
-                key: mysql_instance_connection_name 
+          valueFrom:
+            secretKeyRef:
+              name: vmall-db-secret
+              key: mysql_instance_connection_name 
 
         command:
           - "/cloud_sql_proxy"
@@ -86,7 +87,7 @@ spec:
           # Replace DB_PORT with the port the proxy should listen on
           # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
         
-          - "-instances=$(VMALL_DB_INSTANCE_CONNECTION_NAME)=tcp:$(VMALL_DB_PORT)>"
+          - "-instances=$(VMALL_DB_INSTANCE_CONNECTION_NAME)=tcp:$(VMALL_DB_PORT)"
 
         securityContext:
           # The default Cloud SQL proxy image runs as the
