@@ -16,22 +16,14 @@ spec:
       #: workload identity or a service account key file. Here, use workload identity
       #but the second can also works well, only umcomment related config below.
       serviceAccountName: vmall-db-ksa
-      volumes: 
-      - name: vmall-order-log-volume
-        persistentVolumeClaim:
-          claimName: vmall-order-backend-log-pvc
-      - name: vmall-order-heap-dump-volume
-        persistentVolumeClaim:
-          claimName: vmall-order-backend-log-pvc
-
       containers:
       - name: vmall-order-backend
         image: fdsxaar/vmall-order-backend
         volumeMounts:
         - name: vmall-order-log-volume
           mountPath: /vmall-log/order-log
-        - name : vmall-order-heap-dump-volume
-          mountPath: /vmall-log/heap-dump
+          #- name : vmall-order-heap-dump-volume
+          #mountPath: /vmall-log/heap-dump
 
         ports: 
         - containerPort: 8080 
@@ -119,3 +111,9 @@ spec:
       - name: vmall-db-secret-sa-volume
         secret:
           secretName: vmall-db-secret-sa     
+      - name: vmall-order-log-volume
+        persistentVolumeClaim:
+          claimName: vmall-order-backend-log-pvc
+      - name: vmall-order-heap-dump-volume
+        persistentVolumeClaim:
+          claimName: vmall-order-backend-log-pvc    
