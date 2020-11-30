@@ -18,7 +18,7 @@ spec:
       # [START cloud_sql_proxy_k8s_secrets]
       containers:
       - name: vmall-data-init
-        image: fdsxaar/data-init:v0.1
+        image: fdsxaar/vmall-data-init
         env:
         - name: VMALL_DB_USERNAME
           valueFrom:
@@ -87,10 +87,21 @@ spec:
           # Replace DB_PORT with the port the proxy should listen on
           # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
         
+            #- "-instances=vmall-297009:us-central1:vmall=tcp:3306"
           - "-instances=$(VMALL_DB_INSTANCE_CONNECTION_NAME)=tcp:$(VMALL_DB_PORT)"
-
+            #- "-credential_file=/secrets/service_account.json"
+          
         securityContext:
           # The default Cloud SQL proxy image runs as the
           # "nonroot" user and group (uid: 65532) by default.
           runAsNonRoot: true
+        volumeMounts:
+        - name: vmall-db-secret-sa-volume
+          mountPath: /secrets/
+          readOnly: true
+
+      volumes:
+      - name: vmall-db-secret-sa-volume
+        secret:
+          secretName: vmall-db-secret-sa     
       # [END cloud_sql_proxy_k8s_container]
