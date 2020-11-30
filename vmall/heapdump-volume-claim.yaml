@@ -1,0 +1,11 @@
+#TODO:log shoud be logged into message broker(such as kafka)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vmall-order-backend-log-pvc 
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
