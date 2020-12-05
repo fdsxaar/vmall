@@ -1,4 +1,4 @@
-gitpipeline {
+pipeline {
     agent any
     environment {
         PROJECT_ID = 'vmall-297009'
