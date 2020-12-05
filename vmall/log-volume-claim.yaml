@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: vmall-order-backend-heap-dump-pvc 
+  name: vmall-backend-order-prod-log-pvc 
 spec:
   resources:
     requests:

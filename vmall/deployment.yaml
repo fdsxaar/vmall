@@ -17,8 +17,8 @@ spec:
       #but the second can also works well, only umcomment related config below.
       serviceAccountName: vmall-db-ksa
       containers:
-      - name: vmall-backend-order
-        image: fdsxaar/vmall-order-backend
+      - name: vmall-backend-order-prod 
+        image: fdsxaar/vmall-backend-order-prod:latest 
         volumeMounts:
         - name: vmall-order-log-volume
           mountPath: /vmall-log/order-log
@@ -61,7 +61,7 @@ spec:
               name: vmall-db-secret
               key: redis_host
         #master node's port 6380, can execute write command 
-        #port 6389 is to execute read command. 
+        #port 6379 is to execute read command. 
         - name: VMALL_REDIS_PORT
           valueFrom:
             secretKeyRef:

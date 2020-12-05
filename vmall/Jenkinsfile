@@ -17,23 +17,22 @@ pipeline {
                 script {
                     sh 'mvn clean'
                     sh 'mvn package'
-                    vmall-backend-order = docker.build("fdsxaar/vmall-order-jenkins:${env.BUILD_ID}")
+                    app = docker.build("fdsxaar/vmall-backend-order-prod:${env.BUILD_ID}")
                 }
             }
         }
         stage("Push image") {
             steps {
                 script {
-                    //TODO:check whether image exists in dockerhub
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                            vmall-backend-order.push("${env.BUILD_ID}")
+                            app.push("${env.BUILD_ID}")
                     }
                 }
             }
         }        
         stage('Deploy to GKE') {
             steps{
-                sh "sed -i 's/vmall-order-jenkins:latest/vmall-order-jenkins:${env.BUILD_ID}/g' deployment.yaml"
+                sh "sed -i 's/vmall-backend-order-prod:latest/vmall-backend-order-prod:${env.BUILD_ID}/g' deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
