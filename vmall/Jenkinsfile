@@ -15,6 +15,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
+                    sh 'cd /var/jenkins_home/workspace/vmall-backend-order-prod/vmall/vmall/'
                     sh 'mvn clean'
                     sh 'mvn package'
                     app = docker.build("fdsxaar/vmall-backend-order-prod:${env.BUILD_ID}")
