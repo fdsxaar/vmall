@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-dind-with-kubectl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-dind-with-kubectl
+  template:
+    metadata:
+      labels:
+        app: jenkins-dind-with-kubectl
+    spec:
+      containers:
+      - name: jenkins-dind-with-kubectl
+        image: fdsxaar/jenkins
+
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+          - name: jenkins-home
+            mountPath: /var/jenkins_home
+          - name: host-docker
+            mountPath: /var/run/docker.sock
+      volumes:
+        - name: jenkins-home
+          emptyDir: {}          
+        - name: host-docker
+          hostPath:
+            path: /var/run/docker.sock
