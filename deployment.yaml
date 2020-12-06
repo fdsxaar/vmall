@@ -24,7 +24,7 @@ spec:
           mountPath: /vmall-log/order-log
         - name : vmall-order-heap-dump-volume
           mountPath: /vmall-log/heap-dump
-
+        
         ports:
         - name: http 
           containerPort: 8080
@@ -32,15 +32,15 @@ spec:
           httpGet:
             path: /vmall/submitorder/
             port: http 
-          periodSenconds: 15
+          periodSeconds: 15
           failureThreshold: 8
         livenessProbe:
           httpGet:
             path: /vmall/submitorder/
             port: http 
-          periodSenconds: 60
+          periodSeconds: 60
           failureThreshold: 3
-          
+
         env:
         - name: VMALL_DB_USERNAME
           valueFrom:
